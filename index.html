@@ -91,6 +91,7 @@
     <input type="text" id="check_num" /> 校验位 <br />
     <input type="text" id="full_cardno" /> 完整卡号 <br />
     <input type="button" id="calculate" onclick="calCardno()" value="开始计算" />
+    <input type="button" id="ck" onclick="alert(luhnCheck(document.getElementById('full_cardno').value))" value="校验" />
 
 </body>
 
