@@ -8,10 +8,10 @@
 
 <body>
     <script>
-        car_pr="623190777777";
-        function luhnCheck() {
-            bankno = document.getElementById("cardno").value
-            var first15Num = car_pr+bankno;//前15或18位
+        car_pr = "623190777777";
+        function luhnCheck(no) {
+            var lastno = no.substr(no.length - 1, 1)
+            var first15Num = no.substr(0, no.length - 1);//前15或18位
             var newArr = new Array();
             for (var i = first15Num.length - 1; i > -1; i--) {    //前15或18位倒序存进数组
                 newArr.push(first15Num.substr(i, 1));
@@ -62,15 +62,35 @@
             var k = parseInt(sumTotal) % 10 == 0 ? 10 : parseInt(sumTotal) % 10;
             var luhn = 10 - k;
 
-            document.getElementById("check_num").value = luhn;
-            document.getElementById("full_cardno").value = car_pr+luhn+bankno;
-            return luhn
+            if (luhn == lastno) {
+                return true;
+            }
+            else {
+                return false;
+            }
+            // document.getElementById("check_num").value = luhn;
+            // document.getElementById("full_cardno").value = car_pr+luhn+bankno;
         }
+    
+        function calCardno() {
+            var num_chose = document.getElementById("cardno").value;
+            for(i = 0;i<=9;i++)
+            {
+               var cardno =  car_pr+""+i+""+num_chose;
+               if(luhnCheck(cardno) == true)
+               {
+                    document.getElementById("full_cardno").value=cardno;
+                    document.getElementById("check_num").value=i;
+                    break;
+               }
+            }
+        }
+
     </script>
-    <input type="text" id="cardno"/> 自选六位 <br/>
-    <input type="text" id="check_num"/> 校验位 <br/>
-    <input type="text" id="full_cardno"/> 完整卡号 <br/>
-    <input type="button" id="calculate" onclick="luhnCheck()" value="开始计算"/>
+    <input type="text" id="cardno" /> 自选六位 <br />
+    <input type="text" id="check_num" /> 校验位 <br />
+    <input type="text" id="full_cardno" /> 完整卡号 <br />
+    <input type="button" id="calculate" onclick="calCardno()" value="开始计算" />
 
 </body>
 
